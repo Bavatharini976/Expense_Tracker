@@ -8,11 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/expenses")
-@CrossOrigin(origins = "*")
-
 public class ExpenseController {
 
     @Autowired

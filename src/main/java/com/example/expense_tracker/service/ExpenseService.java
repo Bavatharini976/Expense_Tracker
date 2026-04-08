@@ -1,55 +1,29 @@
-package com.example.expense_tracker.service;
+package com.example.expensetracker.controller;
 
-import com.example.expense_tracker.model.Expense;
-import com.google.cloud.firestore.*;
-import com.google.firebase.cloud.FirestoreClient;
+import com.example.expensetracker.model.Expense;
+import com.example.expensetracker.service.ExpenseService;
 
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
-@Service
-public class ExpenseService {
+@RestController
+@RequestMapping("/api/expenses")
+public class ExpenseController {
 
-    private static final String COLLECTION = "expenses";
+    private final ExpenseService service;
 
-    public String addExpense(Expense expense) throws Exception {
-
-        Firestore db = FirestoreClient.getFirestore();
-
-        db.collection(COLLECTION)
-                .document(expense.getId())
-                .set(expense);
-
-        return "Expense Added";
-
+    public ExpenseController(ExpenseService service) {
+        this.service = service;
     }
 
+    @GetMapping
     public List<Expense> getExpenses() throws Exception {
-
-        Firestore db = FirestoreClient.getFirestore();
-
-        List<Expense> list = new ArrayList<>();
-
-        Iterable<DocumentReference> docs = db.collection(COLLECTION).listDocuments();
-
-        for (DocumentReference doc : docs) {
-
-            DocumentSnapshot snap = doc.get().get();
-            Expense e = snap.toObject(Expense.class);
-
-            list.add(e);
-        }
-
-        return list;
+        return service.getAllExpenses();
     }
 
-    public String deleteExpense(String id) {
-
-        Firestore db = FirestoreClient.getFirestore();
-
-        db.collection(COLLECTION).document(id).delete();
-
-        return "Deleted";
+    @PostMapping
+    public void addExpense(@RequestBody Expense expense) {
+        service.addExpense(expense);
     }
 }
