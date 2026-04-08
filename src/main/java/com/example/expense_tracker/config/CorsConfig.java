@@ -1,4 +1,4 @@
-package com.example.expensetracker.config;
+package com.example.expense_tracker.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +14,9 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*") // For testing (later restrict to Vercel URL)
-                        .allowedMethods("*");
+                        .allowedOrigins("*") // later restrict to Vercel URL
+                        .allowedMethods("GET", "POST", "DELETE", "PUT")
+                        .allowedHeaders("*");
             }
         };
     }

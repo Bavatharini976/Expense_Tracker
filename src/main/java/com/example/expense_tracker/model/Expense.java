@@ -1,4 +1,4 @@
-package com.example.expensetracker.model;
+package com.example.expense_tracker.model;
 
 public class Expense {
 
@@ -7,12 +7,6 @@ public class Expense {
     private double amount;
 
     public Expense() {}
-
-    public Expense(String id, String title, double amount) {
-        this.id = id;
-        this.title = title;
-        this.amount = amount;
-    }
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
